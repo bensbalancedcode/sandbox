@@ -10,6 +10,3 @@ export class TileData {
   public locked: boolean;
 
 }
-
-// git config --global user.email "bensbalancedcode@gmail.com"
-// git config --global user.name "Ben Coder"
