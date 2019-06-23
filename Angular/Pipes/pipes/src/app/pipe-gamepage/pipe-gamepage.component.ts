@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TileComponent } from '../tile/tile.component';
+import { TileData } from '../tileData';
+//import { TileData } from '../tile/tile.component';
 
 @Component({
   selector: 'app-pipe-gamepage',
@@ -10,20 +11,20 @@ export class PipeGamepageComponent implements OnInit {
 
   constructor() { }
 
-  private tileRows: Array<Array<TileComponent>>;
+  public tileRows: Array<Array<TileData>>;
   private readonly tilesInRow = 3;
   private readonly rows = 3;
   
   ngOnInit() {
     console.log("ngOnInit");
     let counter = 0;
-    this.tileRows = new Array<Array<TileComponent>>(this.rows);
+    this.tileRows = new Array<Array<TileData>>(this.rows);
 
     for (var i = 0; i < this.rows; i++) {
-      var tRow = new Array<TileComponent>(this.tilesInRow);
+      var tRow = new Array<TileData>(this.tilesInRow);
       console.log('row ' + i + ' has columns: ' + tRow.length);
       for (var h = 0; h < this.tilesInRow; h++){
-        var tile = new TileComponent(counter, h, i, counter.toString());
+        var tile = new TileData(counter, h, i, counter.toString());
         // tile.image = 'tile ' + counter;
         // console.log('tile: ' + tile.image);
         // tile.id = counter;
@@ -34,7 +35,7 @@ export class PipeGamepageComponent implements OnInit {
     };
 
     // this.tileRows.forEach(tRow => {
-    //   tRow = new Array<TileComponent>(this.tilesInRow);
+    //   tRow = new Array<TileData>(this.tilesInRow);
     //   tRow.forEach(tile => {
     //     tile.image = 'tile ' + counter;
     //     console.log(tile.image);

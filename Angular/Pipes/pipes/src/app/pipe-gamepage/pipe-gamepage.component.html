@@ -34,8 +34,8 @@
       <tr>
         <!-- <td><h2> row first id: {{row[0].id}}</h2></td> -->
       <td *ngFor="let tile of row">T{{tile.id}}:
-          <!-- <app-tile  ></app-tile> -->
-          {{tile}}
+          <app-tile [data]=tile ></app-tile>
+          
       </td>
     </tr>
   </ng-container>

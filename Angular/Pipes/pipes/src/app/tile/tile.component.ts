@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { TileData } from '../tileData';
+//import { TileData } from '../tileData';
 
 @Component({
   selector: 'app-tile',
@@ -7,17 +9,9 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class TileComponent implements OnInit {
 
-  @Input ('id') id_param: number;
+  @Input ('data') data: TileData;
 
-  @Input ('x_coord') x_param: number;
-  @Input ('y_coord') y_param: number;
-
-  @Input ('image') image_param: number;
   constructor(
-    public id: number = 0,
-    public x_coord: number= 0,
-    public y_coord: number= 0,
-    public image: string = ""
     ) { }
 
   // one of several icons.
@@ -28,7 +22,6 @@ export class TileComponent implements OnInit {
   // public x_coord: number;
   // public y_coord: number;
 
-  public locked: boolean;
 
   // public image: string;
 
