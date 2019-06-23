@@ -2,6 +2,17 @@
 
 A little pipe game.
 
+The plan so far:
+simple 3x3 grid to start.
+tile components with pictures on them that change as the state changes.
+click to highlight and swap like in the old version.
+maybe a green/yellow/red background.
+tiles know what directions are allowed for the water to advance in.
+
+How to do the clock?
+
+A tile is a tile.component. It knows it's x and y coordinates.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.1.
 
 ## Development server

@@ -8,7 +8,7 @@
   </tr>
   <tr *ngFor="let tileRow of tileRows">
     <td *ngFor="let tile of tileRow">
-      <app-tile></app-tile>
+      <!-- <app-tile></app-tile> -->
     </td>
   </tr>
   <!-- <tr>
@@ -26,5 +26,18 @@
     <td>Roland Mendel</td>
     <td>Austria</td>
   </tr> -->
+</table>
+
+<h2>try two </h2>
+<table>
+  <ng-container *ngFor="let row of tileRows">
+      <tr>
+        <!-- <td><h2> row first id: {{row[0].id}}</h2></td> -->
+      <td *ngFor="let tile of row">T{{tile.id}}:
+          <!-- <app-tile  ></app-tile> -->
+          {{tile}}
+      </td>
+    </tr>
+  </ng-container>
 </table>
 
