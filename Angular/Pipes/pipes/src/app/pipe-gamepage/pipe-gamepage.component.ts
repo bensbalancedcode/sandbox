@@ -46,4 +46,8 @@ export class PipeGamepageComponent implements OnInit {
 
   }
 
+  tileClick(tile: TileData){
+    console.log("clicked on " + tile.id);
+  }
+
 }

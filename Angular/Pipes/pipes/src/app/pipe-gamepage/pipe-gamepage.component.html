@@ -3,39 +3,10 @@
 <div></div>
 
 <table>
-  <tr>
-    <th *ngFor="let tile of tileRows[0]">C {{tile.id}}</th>
-  </tr>
-  <tr *ngFor="let tileRow of tileRows">
-    <td *ngFor="let tile of tileRow">
-      <!-- <app-tile></app-tile> -->
-    </td>
-  </tr>
-  <!-- <tr>
-    <td>{{tiles[0]}}</td>
-    <td><app-tile #tile1></app-tile></td>
-    <td>Germany</td>
-  </tr>
-  <tr>
-    <td>Centro comercial Moctezuma</td>
-    <td>Francisco Chang</td>
-    <td>Mexico</td>
-  </tr>
-  <tr>
-    <td>Ernst Handel</td>
-    <td>Roland Mendel</td>
-    <td>Austria</td>
-  </tr> -->
-</table>
-
-<h2>try two </h2>
-<table>
   <ng-container *ngFor="let row of tileRows">
       <tr>
-        <!-- <td><h2> row first id: {{row[0].id}}</h2></td> -->
-      <td *ngFor="let tile of row">T{{tile.id}}:
-          <app-tile [data]=tile ></app-tile>
-          
+      <td *ngFor="let tile of row">
+          <app-tile [data]=tile (click)="tileClick(tile)"></app-tile>
       </td>
     </tr>
   </ng-container>
