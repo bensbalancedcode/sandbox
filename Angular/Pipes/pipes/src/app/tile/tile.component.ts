@@ -25,19 +25,19 @@ export class TileComponent implements OnInit {
  
   // public image: string;
 
-  ngOnClick() {
-    console.log("tile saw click on itself");
-    switch(this.data.state)
-    {
-      case this.data.Normal:
-        this.SetSelected();
-        break;
-      case this.data.Locked:
-        break;
-      case this.data.Selected:
-        this.data.state = this.data.Normal;
-    }
-  }
+  // ngOnClick() {
+  //   console.log("tile saw click on itself");
+  //   switch(this.data.state)
+  //   {
+  //     case this.data.Normal:
+  //       this.SetSelected();
+  //       break;
+  //     case this.data.Locked:
+  //       break;
+  //     case this.data.Selected:
+  //       this.data.state = this.data.Normal;
+  //   }
+  // }
 
  
 

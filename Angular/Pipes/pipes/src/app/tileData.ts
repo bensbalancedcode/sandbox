@@ -4,10 +4,12 @@ export class TileData {
         public id: number = 0,
         public x_coord: number= 0,
         public y_coord: number= 0,
-        public image: string = ""
-        ) { }
-   
+        public image: string = "",
+        ) { 
+          this.state = this.Normal;
+        }
   public state: number;
+   
 
   public readonly Locked: number = 0;
   public readonly Selected: number = 1;
@@ -15,6 +17,8 @@ export class TileData {
 
   public bubledClickEvent() : number
   {
+    console.log('tile data click bubble d on tile: ' 
+      + this.id + 'starting state: ' + this.state);
     switch(this.state)
     {
       case this.Normal:
@@ -25,6 +29,9 @@ export class TileData {
       case this.Selected:
         this.state = this.Normal;
     }
+    
+    console.log('post click on tile: ' 
+      + this.id + 'ending state: ' + this.state);
     return this.state;
   }
 

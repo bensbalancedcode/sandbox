@@ -12,6 +12,7 @@ export class PipeGamepageComponent implements OnInit {
 
   constructor() { }
 
+  // tileRows are the y coord
   public tileRows: Array<Array<TileData>>;
   private readonly tilesInRow = 3;
   private readonly rows = 3;
@@ -35,29 +36,57 @@ export class PipeGamepageComponent implements OnInit {
       };
       this.tileRows[i] = tRow;
     };
-
-    // this.tileRows.forEach(tRow => {
-    //   tRow = new Array<TileData>(this.tilesInRow);
-    //   tRow.forEach(tile => {
-    //     tile.image = 'tile ' + counter;
-    //     console.log(tile.image);
-    //     tile.id = counter;
-    //     counter++; 
-    //   });
-    // });
-
   }
 
+  // bug, deslect appears broken
   tileClick(tile: TileData){
-    console.log(" parent sees tile clicked on " + tile.id);
+    console.log("parent sees tile clicked on " + tile.id);
     if (this.selectedTile != undefined)
     {
       let selectedState = tile.bubledClickEvent();
       if (selectedState == tile.Selected)
-        SwapTiles(this.selectedTile, tile);
-
+      {
+        this.SwapTiles(this.selectedTile, tile);
+      }
+      else {
+        this.selectedTile =undefined;
+      }
+    }
+    else {
+      let selectedState = tile.bubledClickEvent();
+      if (selectedState == tile.Selected)
+      {
+        //this.SwapTiles(this.selectedTile, tile);
+        this.selectedTile = tile;
+      }
     }
 
+  }
+
+  SwapTiles(tileA: TileData, tileB: TileData){
+    console.log("swapping tiles, before:");
+    console.log("tile A: " + this.PrintTileCoords(tileA));
+    console.log("tileB: " + this.PrintTileCoords(tileB));
+    // locate each, swap
+    let middle = tileA;
+    let bX = tileB.x_coord;
+    let bY = tileB.y_coord;
+    this.tileRows[tileA.y_coord][tileA.x_coord] = tileB;
+    tileB.x_coord = tileA.x_coord;
+    tileB.y_coord = tileA.y_coord;
+
+    this.tileRows[bY][bX] = middle;
+    middle.x_coord = bX;
+    middle.y_coord = bY;
+
+    console.log("after swap");
+    console.log("tile A: " + this.PrintTileCoords(tileA));
+    console.log("tileB: " + this.PrintTileCoords(tileB));
+  }
+
+  PrintTileCoords(tile: TileData): string {
+    return "tile " + tile.id + " at x: " + tile.x_coord
+      + ", y: " + tile.y_coord;
   }
 
 }
