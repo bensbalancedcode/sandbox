@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TileData } from '../tileData';
-//import { TileData } from '../tileData';
+
 
 @Component({
   selector: 'app-tile',
@@ -22,8 +22,24 @@ export class TileComponent implements OnInit {
   // public x_coord: number;
   // public y_coord: number;
 
-
+ 
   // public image: string;
+
+  ngOnClick() {
+    console.log("tile saw click on itself");
+    switch(this.data.state)
+    {
+      case this.data.Normal:
+        this.SetSelected();
+        break;
+      case this.data.Locked:
+        break;
+      case this.data.Selected:
+        this.data.state = this.data.Normal;
+    }
+  }
+
+ 
 
   ngOnInit() {
   }

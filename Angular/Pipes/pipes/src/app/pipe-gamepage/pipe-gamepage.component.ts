@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TileData } from '../tileData';
+import { isNullOrUndefined } from 'util';
 //import { TileData } from '../tile/tile.component';
 
 @Component({
@@ -14,6 +15,7 @@ export class PipeGamepageComponent implements OnInit {
   public tileRows: Array<Array<TileData>>;
   private readonly tilesInRow = 3;
   private readonly rows = 3;
+  protected selectedTile: TileData;
   
   ngOnInit() {
     console.log("ngOnInit");
@@ -47,7 +49,15 @@ export class PipeGamepageComponent implements OnInit {
   }
 
   tileClick(tile: TileData){
-    console.log("clicked on " + tile.id);
+    console.log(" parent sees tile clicked on " + tile.id);
+    if (this.selectedTile != undefined)
+    {
+      let selectedState = tile.bubledClickEvent();
+      if (selectedState == tile.Selected)
+        SwapTiles(this.selectedTile, tile);
+
+    }
+
   }
 
 }

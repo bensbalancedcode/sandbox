@@ -7,6 +7,30 @@ export class TileData {
         public image: string = ""
         ) { }
    
-  public locked: boolean;
+  public state: number;
+
+  public readonly Locked: number = 0;
+  public readonly Selected: number = 1;
+  public readonly Normal: number = 2;
+
+  public bubledClickEvent() : number
+  {
+    switch(this.state)
+    {
+      case this.Normal:
+        this.SetSelected();
+        break;
+      case this.Locked:
+        break;
+      case this.Selected:
+        this.state = this.Normal;
+    }
+    return this.state;
+  }
+
+  public SetSelected(){
+    this.state = this.Selected;
+
+  }
 
 }
