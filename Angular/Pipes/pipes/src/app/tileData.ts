@@ -17,12 +17,12 @@ export class TileData {
 
   public bubledClickEvent() : number
   {
-    console.log('tile data click bubble d on tile: ' 
+    console.log('tile data click bubbled up to tile: ' 
       + this.id + 'starting state: ' + this.state);
     switch(this.state)
     {
       case this.Normal:
-        this.SetSelected();
+        this.state = this.Selected;
         break;
       case this.Locked:
         break;
@@ -33,11 +33,6 @@ export class TileData {
     console.log('post click on tile: ' 
       + this.id + 'ending state: ' + this.state);
     return this.state;
-  }
-
-  public SetSelected(){
-    this.state = this.Selected;
-
   }
 
 }

@@ -11,6 +11,8 @@ export class TileComponent implements OnInit {
 
   @Input ('data') data: TileData;
 
+  public classVar = "enabled";
+
   constructor(
     ) { }
 
@@ -39,6 +41,22 @@ export class TileComponent implements OnInit {
   //   }
   // }
 
+  public SetTileColorByStatus(status: number){
+    switch(status)
+    {
+      case this.data.Normal:
+        this.classVar = "enabled";
+        break;
+      case this.data.Selected:
+        this.classVar = "selected";
+        break;
+      case this.data.Locked:
+        this.classVar = "locked";
+        break;
+      default:
+        alert("unknown tile status: " + status);
+    }
+  }
  
 
   ngOnInit() {

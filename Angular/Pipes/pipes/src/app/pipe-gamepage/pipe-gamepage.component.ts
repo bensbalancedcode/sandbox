@@ -38,9 +38,9 @@ export class PipeGamepageComponent implements OnInit {
     };
   }
 
-  // bug, deslect appears broken
+  // bug, deslect appears broken. might just be doubled click events
   tileClick(tile: TileData){
-    console.log("parent sees tile clicked on " + tile.id);
+    console.log("*** parent sees tile clicked on " + tile.id);
     if (this.selectedTile != undefined)
     {
       let selectedState = tile.bubledClickEvent();
@@ -49,7 +49,7 @@ export class PipeGamepageComponent implements OnInit {
         this.SwapTiles(this.selectedTile, tile);
       }
       else {
-        this.selectedTile =undefined;
+        this.selectedTile = undefined;
       }
     }
     else {
@@ -60,7 +60,12 @@ export class PipeGamepageComponent implements OnInit {
         this.selectedTile = tile;
       }
     }
+    if (this.selectedTile != undefined)
+      console.log("ending selected tile is: " + this.selectedTile.id);
+    else
+      console.log("ending selected tile is: undefined" );
 
+    console.log("");
   }
 
   SwapTiles(tileA: TileData, tileB: TileData){
