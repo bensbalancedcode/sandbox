@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TileData } from '../tileData';
 import { isNullOrUndefined } from 'util';
+import { PipeService } from '../pipe.service';
 //import { TileData } from '../tile/tile.component';
 
 @Component({
@@ -10,7 +11,9 @@ import { isNullOrUndefined } from 'util';
 })
 export class PipeGamepageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private pipeservice: PipeService
+  ) { }
 
   // could control children f they're kept in array, 
   // but then arranging into a grid is harder
