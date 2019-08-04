@@ -11,7 +11,10 @@ export class TileComponent implements OnInit {
 
   @Input ('data') data: TileData;
 
-  public classVar = "enabled";
+  public readonly tileClass = "tile";
+  public classVar = "tile enabled";
+  
+  private currentState: number;
 
   constructor(
     ) { }
@@ -41,17 +44,31 @@ export class TileComponent implements OnInit {
   //   }
   // }
 
+  ngDoCheck(){
+    console.log("ngDoCheck");
+    this.CheckStatus();
+  }
+
+  public CheckStatus(){
+    if (this.currentState !== this.data.state) {
+      console.log("^^^CheckStatus called, currentState: " + this.currentState +
+        " data state: " + this.data.state)
+      this.SetTileColorByStatus(this.data.state);
+      this.currentState = this.data.state;
+    }
+  }
+
   public SetTileColorByStatus(status: number){
     switch(status)
     {
       case this.data.Normal:
-        this.classVar = "enabled";
+        this.classVar = "enabled " + this.tileClass;
         break;
       case this.data.Selected:
-        this.classVar = "selected";
+        this.classVar = "selected " + this.tileClass;
         break;
       case this.data.Locked:
-        this.classVar = "locked";
+        this.classVar = "locked " + this.tileClass;
         break;
       default:
         alert("unknown tile status: " + status);
@@ -60,6 +77,7 @@ export class TileComponent implements OnInit {
  
 
   ngOnInit() {
+    this.currentState = this.data.state;
   }
 
 }

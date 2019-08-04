@@ -12,6 +12,9 @@ export class PipeGamepageComponent implements OnInit {
 
   constructor() { }
 
+  // could control children f they're kept in array, 
+  // but then arranging into a grid is harder
+
   // tileRows are the y coord
   public tileRows: Array<Array<TileData>>;
   private readonly tilesInRow = 3;
@@ -47,6 +50,7 @@ export class PipeGamepageComponent implements OnInit {
       if (selectedState == tile.Selected)
       {
         this.SwapTiles(this.selectedTile, tile);
+        this.selectedTile = undefined;
       }
       else {
         this.selectedTile = undefined;
@@ -60,6 +64,7 @@ export class PipeGamepageComponent implements OnInit {
         this.selectedTile = tile;
       }
     }
+    
     if (this.selectedTile != undefined)
       console.log("ending selected tile is: " + this.selectedTile.id);
     else
@@ -83,6 +88,9 @@ export class PipeGamepageComponent implements OnInit {
     this.tileRows[bY][bX] = middle;
     middle.x_coord = bX;
     middle.y_coord = bY;
+
+    tileA.state = tileA.Normal;
+    tileB.state = tileB.Normal;
 
     console.log("after swap");
     console.log("tile A: " + this.PrintTileCoords(tileA));
