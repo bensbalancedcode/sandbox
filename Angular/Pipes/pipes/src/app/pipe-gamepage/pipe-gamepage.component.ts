@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { TileData } from '../tileData';
 import { isNullOrUndefined } from 'util';
 import { PipeService } from '../pipe.service';
-//import { TileData } from '../tile/tile.component';
 
 @Component({
   selector: 'app-pipe-gamepage',
   templateUrl: './pipe-gamepage.component.html',
-  styleUrls: ['./pipe-gamepage.component.scss']
+  styleUrls: ['./pipe-gamepage.component.scss'],
+  providers: [PipeService]
 })
 export class PipeGamepageComponent implements OnInit {
 
@@ -51,7 +51,7 @@ export class PipeGamepageComponent implements OnInit {
 
   // bug, deslect appears broken. might just be doubled click events
   tileClick(tile: TileData){
-    console.log("*** parent sees tile clicked on " + tile.id);
+    // console.log("*** parent sees tile clicked on " + tile.id);
     if (this.selectedTile != undefined)
     {
       let selectedState = tile.bubledClickEvent();
@@ -73,18 +73,18 @@ export class PipeGamepageComponent implements OnInit {
       }
     }
 
-    if (this.selectedTile != undefined)
-      console.log("ending selected tile is: " + this.selectedTile.id);
-    else
-      console.log("ending selected tile is: undefined" );
+    // if (this.selectedTile != undefined)
+      // console.log("ending selected tile is: " + this.selectedTile.id);
+    // else
+      // console.log("ending selected tile is: undefined" );
 
-    console.log("");
+    // console.log("");
   }
 
   SwapTiles(tileA: TileData, tileB: TileData){
-    console.log("swapping tiles, before:");
-    console.log("tile A: " + this.PrintTileCoords(tileA));
-    console.log("tileB: " + this.PrintTileCoords(tileB));
+    // console.log("swapping tiles, before:");
+    // console.log("tile A: " + this.PrintTileCoords(tileA));
+    // console.log("tileB: " + this.PrintTileCoords(tileB));
     // locate each, swap
     let middle = tileA;
     let bX = tileB.x_coord;
@@ -100,9 +100,9 @@ export class PipeGamepageComponent implements OnInit {
     tileA.state = tileA.Normal;
     tileB.state = tileB.Normal;
 
-    console.log("after swap");
-    console.log("tile A: " + this.PrintTileCoords(tileA));
-    console.log("tileB: " + this.PrintTileCoords(tileB));
+    // console.log("after swap");
+    // console.log("tile A: " + this.PrintTileCoords(tileA));
+    // console.log("tileB: " + this.PrintTileCoords(tileB));
   }
 
   PrintTileCoords(tile: TileData): string {

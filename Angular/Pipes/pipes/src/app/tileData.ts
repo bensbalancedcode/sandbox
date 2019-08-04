@@ -17,8 +17,8 @@ export class TileData {
 
   public bubledClickEvent() : number
   {
-    console.log('tile data click bubbled up to tile: ' 
-      + this.id + 'starting state: ' + this.state);
+    // console.log('tile data click bubbled up to tile: ' 
+    //   + this.id + 'starting state: ' + this.state);
     switch(this.state)
     {
       case this.Normal:
@@ -30,8 +30,8 @@ export class TileData {
         this.state = this.Normal;
     }
     
-    console.log('post click on tile: ' 
-      + this.id + 'ending state: ' + this.state);
+    // console.log('post click on tile: ' 
+    //   + this.id + 'ending state: ' + this.state);
     return this.state;
   }
 
