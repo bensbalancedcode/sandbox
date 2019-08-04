@@ -20,6 +20,10 @@ export class PipeGamepageComponent implements OnInit {
   private readonly tilesInRow = 3;
   private readonly rows = 3;
   protected selectedTile: TileData;
+
+  private readonly flat_Vertical_source = "assets/tiles02/flat_vertical.png";
+
+  private readonly flat_Horizontal_source = "assets/tiles02/flat_horizontal.png";
   
   ngOnInit() {
     console.log("ngOnInit");
@@ -30,7 +34,8 @@ export class PipeGamepageComponent implements OnInit {
       var tRow = new Array<TileData>(this.tilesInRow);
       console.log('row ' + i + ' has columns: ' + tRow.length);
       for (var h = 0; h < this.tilesInRow; h++){
-        var tile = new TileData(counter, h, i, counter.toString());
+        let source = ((h + i) % 2 > 0) ? this.flat_Horizontal_source : this.flat_Vertical_source;
+        var tile = new TileData(counter, h, i, source);
         // tile.image = 'tile ' + counter;
         // console.log('tile: ' + tile.image);
         // tile.id = counter;
@@ -64,7 +69,7 @@ export class PipeGamepageComponent implements OnInit {
         this.selectedTile = tile;
       }
     }
-    
+
     if (this.selectedTile != undefined)
       console.log("ending selected tile is: " + this.selectedTile.id);
     else
