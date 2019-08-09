@@ -9,15 +9,15 @@ import { TileData } from '../tileData';
 })
 export class TileComponent implements OnInit {
 
-  @Input ('data') data: TileData;
+  @Input('data') data: TileData;
 
   public readonly tileClass = "tile";
   public classVar = "tile enabled";
-  
+
   private currentState: number;
 
   constructor(
-    ) { }
+  ) { }
 
   // one of several icons.
   // can be locked in place.
@@ -27,7 +27,7 @@ export class TileComponent implements OnInit {
   // public x_coord: number;
   // public y_coord: number;
 
- 
+
   // public image: string;
 
   // ngOnClick() {
@@ -44,12 +44,12 @@ export class TileComponent implements OnInit {
   //   }
   // }
 
-  ngDoCheck(){
+  ngDoCheck() {
     console.log("ngDoCheck");
     this.CheckStatus();
   }
 
-  public CheckStatus(){
+  public CheckStatus() {
     if (this.currentState !== this.data.state) {
       console.log("^^^CheckStatus called, currentState: " + this.currentState +
         " data state: " + this.data.state)
@@ -58,9 +58,8 @@ export class TileComponent implements OnInit {
     }
   }
 
-  public SetTileColorByStatus(status: number){
-    switch(status)
-    {
+  public SetTileColorByStatus(status: number) {
+    switch (status) {
       case this.data.Normal:
         this.classVar = "enabled " + this.tileClass;
         break;
@@ -70,11 +69,14 @@ export class TileComponent implements OnInit {
       case this.data.Locked:
         this.classVar = "locked " + this.tileClass;
         break;
+      case this.data.Locking:
+        this.classVar = "locking " + this.tileClass;
+        break;
       default:
         alert("unknown tile status: " + status);
     }
   }
- 
+
 
   ngOnInit() {
     this.currentState = this.data.state;
