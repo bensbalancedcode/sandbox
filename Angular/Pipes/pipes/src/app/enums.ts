@@ -11,3 +11,14 @@ enum Direction {
     Selected = "SELECTED",
     Normal = "NORMAL",
   }
+
+  enum TileType {
+      // straight lines
+      NorthToSouth, 
+      WestToEast, 
+      // right angles
+      NorthToEast,
+      NorthToWest,
+      SouthToEast,
+      SouthToWest
+  }

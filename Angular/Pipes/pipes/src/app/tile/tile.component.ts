@@ -14,7 +14,7 @@ export class TileComponent implements OnInit {
   public readonly tileClass = "tile";
   public classVar = "tile enabled";
 
-  private currentState: number;
+  private currentState: TileState;
 
   constructor(
   ) { }
@@ -58,18 +58,18 @@ export class TileComponent implements OnInit {
     }
   }
 
-  public SetTileColorByStatus(status: number) {
+  public SetTileColorByStatus(status: TileState) {
     switch (status) {
-      case this.data.Normal:
+      case TileState.Normal:
         this.classVar = "enabled " + this.tileClass;
         break;
-      case this.data.Selected:
+      case TileState.Selected:
         this.classVar = "selected " + this.tileClass;
         break;
-      case this.data.Locked:
+      case TileState.Locked:
         this.classVar = "locked " + this.tileClass;
         break;
-      case this.data.Locking:
+      case TileState.Locking:
         this.classVar = "locking " + this.tileClass;
         break;
       default:

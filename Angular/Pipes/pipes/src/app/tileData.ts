@@ -7,22 +7,23 @@ export class TileData {
   constructor(
     public id: number = 0,
     public location: TileLocation,
+    public type: TileType,
     public image: string = "",
     private pipeService: PipeService
   ) {
-    this.state = this.Normal;
+    this.state = TileState.Normal;
 
     this.lockingSubscription = this.pipeService.setLockingState$.subscribe(
       tileId => {
         if (this.id == tileId) {
-          this.state = this.Locking; // set the state and the component will change its color
+          this.state = TileState.Locking; // set the state and the component will change its color
         }
       });
 
     this.lockedSubscription = this.pipeService.setLockedState$.subscribe(
       tileId => {
         if (this.id == tileId) {
-          this.state = this.Locked;
+          this.state = TileState.Locked;
         }
       });
   }
@@ -34,23 +35,23 @@ export class TileData {
   public matchedValidDirections: Array<Direction>;
 
 
-  public readonly Locked: number = 0;
-  public readonly Locking: number = 1
-  public readonly Selected: number = 2;
-  public readonly Normal: number = 3;
+  // public readonly Locked: number = 0;
+  // public readonly Locking: number = 1
+  // public readonly Selected: number = 2;
+  // public readonly Normal: number = 3;
 
-  public bubledClickEvent(): number {
+  public bubledClickEvent(): TileState {
     // console.log('tile data click bubbled up to tile: ' 
     //   + this.id + 'starting state: ' + this.state);
     switch (this.state) {
-      case this.Normal:
-        this.state = this.Selected;
+      case TileState.Normal:
+        this.state = TileState.Selected;
         break;
-      case this.Locked:
-      case this.Locking:
+      case TileState.Locked:
+      case TileState.Locking:
         break;
-      case this.Selected:
-        this.state = this.Normal;
+      case TileState.Selected:
+        this.state = TileState.Normal;
     }
 
     // console.log('post click on tile: ' 

@@ -38,17 +38,31 @@ export class PipeGamepageComponent implements OnInit {
       var tRow = new Array<TileData>(this.tilesInRow);
       console.log('row ' + i + ' has columns: ' + tRow.length);
       for (var h = 0; h < this.tilesInRow; h++){
-        let source = ((h + i) % 2 > 0) ? this.flat_Horizontal_source : this.flat_Vertical_source;
+        let type = this.pickTileType(h, i);
+        let source = this.getImageSourceSTring(type);
         var location = new TileLocation(h, i);
-        var tile = new TileData(counter, location, source);
-        // tile.image = 'tile ' + counter;
-        // console.log('tile: ' + tile.image);
-        // tile.id = counter;
+        var tile = new TileData(counter, location, type, source, this.pipeservice);
         counter++; 
         tRow[h] = tile;
       };
       this.tileRows[i] = tRow;
     };
+
+    // TODO initialize tile valid directions... somehow
+  }
+
+  pickTileType (y: number, x: number): TileType{
+    return ((y + x) % 2 > 0) ? TileType.WestToEast : TileType.NorthToSouth;
+  }
+
+  getImageSourceSTring(tileType: TileType): string
+  {
+    switch(tileType) {
+      case TileType.NorthToSouth:
+        return this.flat_Vertical_source;
+      default:
+        return this.flat_Horizontal_source;
+    }
   }
 
   // bug, deslect appears broken. might just be doubled click events
@@ -57,7 +71,7 @@ export class PipeGamepageComponent implements OnInit {
     if (this.selectedTile != undefined)
     {
       let selectedState = tile.bubledClickEvent();
-      if (selectedState == tile.Selected)
+      if (selectedState == TileState.Selected)
       {
         this.SwapTiles(this.selectedTile, tile);
       }
@@ -65,7 +79,7 @@ export class PipeGamepageComponent implements OnInit {
     }
     else {
       let selectedState = tile.bubledClickEvent();
-      if (selectedState == tile.Selected)
+      if (selectedState == TileState.Selected)
       {
         //this.SwapTiles(this.selectedTile, tile);
         this.selectedTile = tile;
@@ -81,6 +95,14 @@ export class PipeGamepageComponent implements OnInit {
   }
 
   SwapTiles(tileA: TileData, tileB: TileData){
+    if (tileA.state == TileState.Locked || 
+      tileA.state == TileState.Locking ||
+      tileB.state == TileState.Locked || 
+      tileB.state == TileState.Locking )
+      {
+        console.log("tried to swap locked tiles.");
+        return;
+      }
     // console.log("swapping tiles, before:");
     // console.log("tile A: " + this.PrintTileCoords(tileA));
     // console.log("tileB: " + this.PrintTileCoords(tileB));
@@ -95,8 +117,8 @@ export class PipeGamepageComponent implements OnInit {
     middle.location.x_coord = bLoc.x_coord;
     middle.location.y_coord = bLoc.y_coord;
 
-    tileA.state = tileA.Normal;
-    tileB.state = tileB.Normal;
+    tileA.state = TileState.Normal;
+    tileB.state = TileState.Normal;
 
     // console.log("after swap");
     // console.log("tile A: " + this.PrintTileCoords(tileA));
