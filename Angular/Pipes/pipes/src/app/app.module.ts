@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PipeGamepageComponent } from './pipe-gamepage/pipe-gamepage.component';
 import { TileComponent } from './tile/tile.component';
-import { TileData } from './tileData';
+import { TileSpot } from './tileSpot';
 import { TileLocation } from './tileLocation';
 
 @NgModule({

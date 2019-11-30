@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TileData } from '../tileData';
+import { TileSpot } from '../tileSpot';
 import { TileState } from '../enums';
 
 
@@ -10,7 +10,7 @@ import { TileState } from '../enums';
 })
 export class TileComponent implements OnInit {
 
-  @Input('data') data: TileData;
+  @Input('data') data: TileSpot;
 
   public readonly tileClass = "tile";
   public classVar = "tile enabled";

@@ -1,4 +1,4 @@
-export enum Direction {
+export enum FlowDirection {
     North = "NORTH",
     South = "SOUTH",
     East = "EAST",
