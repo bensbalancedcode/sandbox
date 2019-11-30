@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TileData } from '../tileData';
+import { TileState } from '../enums';
 
 
 @Component({

@@ -1,6 +1,7 @@
 import { TileLocation } from "./tileLocation";
 import { PipeService } from "./pipe.service";
 import { Subscription } from "rxjs";
+import { TileType, TileState, Direction } from "./enums";
 
 export class TileData {
 

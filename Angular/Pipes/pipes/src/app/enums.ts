@@ -1,24 +1,24 @@
-enum Direction {
+export enum Direction {
     North = "NORTH",
     South = "SOUTH",
     East = "EAST",
     WEST = "WEST",
   }
 
-  enum TileState {
+  export enum TileState {
     Locked = "LOCKED",
     Locking = "LOCKING",
     Selected = "SELECTED",
     Normal = "NORMAL",
   }
 
-  enum TileType {
+  export enum TileType {
       // straight lines
-      NorthToSouth, 
-      WestToEast, 
+      NorthToSouth = "NS", 
+      WestToEast = "WE", 
       // right angles
-      NorthToEast,
-      NorthToWest,
-      SouthToEast,
-      SouthToWest
+      NorthToEast = "NE",
+      NorthToWest = "NW",
+      SouthToEast = "SE",
+      SouthToWest = "SW"
   }

@@ -13,8 +13,7 @@ import { TileLocation } from './tileLocation';
     AppComponent,
     PipeGamepageComponent,
     TileComponent,
-    TileLocation
-    ,    TileData // seems this isn't needed... leaving it in case it is later
+    //,    TileData // seems this isn't needed... leaving it in case it is later
   ],
   imports: [
     BrowserModule,

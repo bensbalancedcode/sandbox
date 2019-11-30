@@ -3,6 +3,7 @@ import { TileData } from '../tileData';
 import { isNullOrUndefined } from 'util';
 import { PipeService } from '../pipe.service';
 import { TileLocation } from '../tileLocation';
+import { TileType, TileState } from '../enums';
 
 @Component({
   selector: 'app-pipe-gamepage',
@@ -67,7 +68,7 @@ export class PipeGamepageComponent implements OnInit {
 
   // bug, deslect appears broken. might just be doubled click events
   tileClick(tile: TileData){
-    // console.log("*** parent sees tile clicked on " + tile.id);
+    console.log("*** parent sees tile clicked on " + tile.id);
     if (this.selectedTile != undefined)
     {
       let selectedState = tile.bubledClickEvent();
@@ -107,8 +108,10 @@ export class PipeGamepageComponent implements OnInit {
     // console.log("tile A: " + this.PrintTileCoords(tileA));
     // console.log("tileB: " + this.PrintTileCoords(tileB));
     // locate each, swap
-    let middle = tileA;
-    let bLoc = tileB.location;
+    let middle = JSON.parse(JSON.stringify(tileA));;
+    let bLoc = JSON.parse(JSON.stringify(tileB.location));
+    let aLoc = JSON.parse(JSON.stringify(tileA.location));
+    debugger;
     this.tileRows[tileA.location.y_coord][tileA.location.x_coord] = tileB;
     tileB.location.x_coord = tileA.location.x_coord;
     tileB.location.y_coord = tileA.location.y_coord;
