@@ -5,6 +5,19 @@ export enum FlowDirection {
     WEST = "WEST",
   }
 
+  export enum Adjancency {
+    North = "NORTH",
+    South = "SOUTH",
+    East = "EAST",
+    WEST = "WEST",
+    
+    // The same location
+    Match = "MATCH",
+
+    // locations do not share edge or the same spot
+    Seperated = "SEPERATED"
+  }
+
   export enum TileState {
     Locked = "LOCKED",
     Locking = "LOCKING",

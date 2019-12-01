@@ -3,7 +3,7 @@ import { TileSpot } from '../tileSpot';
 import { isNullOrUndefined } from 'util';
 import { PipeService } from '../pipe.service';
 import { TileLocation } from '../tileLocation';
-import { TileType, TileState } from '../enums';
+import { TileType, TileState, FlowDirection, Adjancency } from '../enums';
 import { TileData } from '../tileData';
 import { FlowDirectionService } from '../flowDirection.service';
 
@@ -17,8 +17,14 @@ export class PipeGamepageComponent implements OnInit {
 
   constructor(
     private pipeservice: PipeService,
-    private flowDirectionService: FlowDirectionService
-  ) { }
+    private flowDirectionService: FlowDirectionService,
+
+  ) {
+    this.initialFlowLocation = new TileLocation(0, -1);
+
+  }
+
+  private readonly initialFlowLocation: TileLocation;
 
   // tileRows are the y coord
   public tileRows: Array<Array<TileSpot>>;
@@ -33,7 +39,7 @@ export class PipeGamepageComponent implements OnInit {
   private readonly flat_Horizontal_source = "assets/tiles02/flat_horizontal.png";
 
 
-  
+
   ngOnInit() {
     console.log("ngOnInit");
     let counter = 0;
@@ -42,29 +48,28 @@ export class PipeGamepageComponent implements OnInit {
     for (var i = 0; i < this.rows; i++) {
       var tRow = new Array<TileSpot>(this.tilesInRow);
       console.log('row ' + i + ' has columns: ' + tRow.length);
-      for (var h = 0; h < this.tilesInRow; h++){
+      for (var h = 0; h < this.tilesInRow; h++) {
         let type = this.pickTileType(h, i);
         let imageSource = this.getImageSourceString(type);
         var location = new TileLocation(h, i);
         var tileData = new TileData(type, imageSource);
         var tile = new TileSpot(counter, location, tileData, this.pipeservice, this.flowDirectionService);
-        counter++; 
+        counter++;
         tRow[h] = tile;
       };
       this.tileRows[i] = tRow;
     };
 
     // initialize the entry point to come from above location 0, 0
-    this.lastLockedSpot = new TileLocation(0, -1);
+    this.lastLockedSpot = this.initialFlowLocation;
   }
 
-  pickTileType (y: number, x: number): TileType{
+  pickTileType(y: number, x: number): TileType {
     return ((y + x) % 2 > 0) ? TileType.WestToEast : TileType.NorthToSouth;
   }
 
-  getImageSourceString(tileType: TileType): string
-  {
-    switch(tileType) {
+  getImageSourceString(tileType: TileType): string {
+    switch (tileType) {
       case TileType.NorthToSouth:
         return this.flat_Vertical_source;
       default:
@@ -73,43 +78,39 @@ export class PipeGamepageComponent implements OnInit {
   }
 
   // bug, deslect appears broken. might just be doubled click events
-  tileClick(tile: TileSpot){
+  tileClick(tile: TileSpot) {
     console.log("*** parent sees tile clicked on " + tile.id);
-    if (this.selectedTile != undefined)
-    {
+    if (this.selectedTile != undefined) {
       let selectedState = tile.bubledClickEvent();
-      if (selectedState == TileState.Selected)
-      {
+      if (selectedState == TileState.Selected) {
         this.SwapTiles(this.selectedTile, tile);
       }
       this.selectedTile = undefined;
     }
     else {
       let selectedState = tile.bubledClickEvent();
-      if (selectedState == TileState.Selected)
-      {
+      if (selectedState == TileState.Selected) {
         //this.SwapTiles(this.selectedTile, tile);
         this.selectedTile = tile;
       }
     }
 
     // if (this.selectedTile != undefined)
-      // console.log("ending selected tile is: " + this.selectedTile.id);
+    // console.log("ending selected tile is: " + this.selectedTile.id);
     // else
-      // console.log("ending selected tile is: undefined" );
+    // console.log("ending selected tile is: undefined" );
 
     // console.log("");
   }
 
-  SwapTiles(tileA: TileSpot, tileB: TileSpot){
-    if (tileA.state == TileState.Locked || 
+  SwapTiles(tileA: TileSpot, tileB: TileSpot) {
+    if (tileA.state == TileState.Locked ||
       tileA.state == TileState.Locking ||
-      tileB.state == TileState.Locked || 
-      tileB.state == TileState.Locking )
-      {
-        console.log("tried to swap locked tiles.");
-        return;
-      }
+      tileB.state == TileState.Locked ||
+      tileB.state == TileState.Locking) {
+      console.log("tried to swap locked tiles.");
+      return;
+    }
     // console.log("swapping tiles, before:");
     // console.log("tile A: " + this.PrintTileCoords(tileA));
     // console.log("tile B: " + this.PrintTileCoords(tileB));
@@ -133,9 +134,9 @@ export class PipeGamepageComponent implements OnInit {
     return this.tileRows[location.y_coord][location.x_coord];
   }
 
-  CountdownReached(){
+  CountdownReached() {
     // when the timer ticks over, the currently 'locking' tile is put in finished lock state,
-    this.lastLockedSpot
+    if
     // and the next tile in line is found.
     // if the next tile is the goal state, the game is won.
     // if the next tile is valid, it is set to 'locking'.
@@ -148,6 +149,36 @@ export class PipeGamepageComponent implements OnInit {
 
   CopyTileData(tileData: TileData): TileData {
     return JSON.parse(JSON.stringify(tileData));
+  }
+
+
+  // examples: X, Y
+  // A: 0, 0 and B: 0, 1 (one below)
+  // A: 1, 1 and B: 2, 1  (one right)
+  // A: 2, 2 and B: 1, 1 (not sharing)
+  CompareTileLocation(locA: TileLocation, locB: TileLocation): Adjancency {
+
+    if (locA.x_coord == locB.x_coord &&
+      locA.y_coord == locB.y_coord) {
+      return Adjancency.Match;
+    }
+    let diffX = Math.abs(locA.x_coord - locB.x_coord);
+    let diffY = Math.abs(locA.y_coord - locB.y_coord);
+
+    if ((diffY + diffX) === 1) {
+      // we know the tiles are adjacent by one, need to figure out which direction
+      if (diffX == 1 && diffY == 0) {
+        // now pick between east and west... if that makes sense
+      }
+      else if (diffX == 0 && diffY == 1) {
+
+      } else {
+        console.log("Unexpected location difference: X= " + diffX + " Y= " + diffY);
+      }
+    }
+    else {
+      return Adjancency.Seperated;
+    }
   }
 
   PrintTileCoords(tile: TileSpot): string {
