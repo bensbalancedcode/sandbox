@@ -21,10 +21,12 @@ export class PipeGamepageComponent implements OnInit {
 
   ) {
     this.initialFlowLocation = new TileLocation(0, -1);
+    this.initialTileType = TileType.NorthToSouth;
 
   }
 
   private readonly initialFlowLocation: TileLocation;
+  private readonly initialTileType: TileType;
 
   // tileRows are the y coord
   public tileRows: Array<Array<TileSpot>>;
@@ -135,8 +137,15 @@ export class PipeGamepageComponent implements OnInit {
   }
 
   CountdownReached() {
+    // handle initial state
+    if (this.lastLockedSpot == this.initialFlowLocation &&
+      this.lockedTiles.length == 0)
+      {
+        // this.intialFlowLocation + this.initialTileType into comparison engine
+      }
+    
     // when the timer ticks over, the currently 'locking' tile is put in finished lock state,
-    if
+    
     // and the next tile in line is found.
     // if the next tile is the goal state, the game is won.
     // if the next tile is valid, it is set to 'locking'.
@@ -152,11 +161,13 @@ export class PipeGamepageComponent implements OnInit {
   }
 
 
-  // examples: X, Y
-  // A: 0, 0 and B: 0, 1 (one below)
-  // A: 1, 1 and B: 2, 1  (one right)
-  // A: 2, 2 and B: 1, 1 (not sharing)
+  // returns the adjency from a locA centric view.
+  // i.e. if B is to the right (west) of A, then west is returned.
   CompareTileLocation(locA: TileLocation, locB: TileLocation): Adjancency {
+    // examples: X, Y
+    // A: 0, 0 and B: 0, 1 (one below)
+    // A: 1, 1 and B: 2, 1  (one right)
+    // A: 2, 2 and B: 1, 1 (not sharing)
 
     if (locA.x_coord == locB.x_coord &&
       locA.y_coord == locB.y_coord) {
@@ -169,9 +180,23 @@ export class PipeGamepageComponent implements OnInit {
       // we know the tiles are adjacent by one, need to figure out which direction
       if (diffX == 1 && diffY == 0) {
         // now pick between east and west... if that makes sense
+        if (locA.x_coord < locB.x_coord) {
+          // smaller coord for A means left or western side
+          return Adjancency.WEST;
+        }
+        else {
+          return Adjancency.East;
+        }
       }
       else if (diffX == 0 && diffY == 1) {
-
+        // now pick between north and south
+        if (locA.y_coord < locB.y_coord) {
+          // small coord for A means upper or northern side
+          return Adjancency.North;
+        }
+        else {
+          return Adjancency.South;
+        }
       } else {
         console.log("Unexpected location difference: X= " + diffX + " Y= " + diffY);
       }
