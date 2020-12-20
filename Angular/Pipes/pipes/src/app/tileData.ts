@@ -7,6 +7,7 @@ export class TileData {
     
     public type: TileType,
     public image: string = "",
+    public idCode: number 
     )
     {}
 }

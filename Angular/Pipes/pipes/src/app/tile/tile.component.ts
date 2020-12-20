@@ -10,7 +10,7 @@ import { TileState } from '../enums';
 })
 export class TileComponent implements OnInit {
 
-  @Input('data') data: TileSpot;
+  @Input('tileSpotModel') tileSpotModel: TileSpot;
 
   public readonly tileClass = "tile";
   public classVar = "tile enabled";
@@ -51,15 +51,16 @@ export class TileComponent implements OnInit {
   }
 
   public CheckStatus() {
-    if (this.currentState !== this.data.state) {
+    if (this.currentState !== this.tileSpotModel.state) {
       console.log("^^^CheckStatus called, currentState: " + this.currentState +
-        " data state: " + this.data.state)
-      this.SetTileColorByStatus(this.data.state);
-      this.currentState = this.data.state;
+        " data state: " + this.tileSpotModel.state)
+      this.SetTileColorByStatus(this.tileSpotModel.state);
+      this.currentState = this.tileSpotModel.state;
     }
   }
 
   public SetTileColorByStatus(status: TileState) {
+    console.log("^^^^ setting tile color by state: " + status);
     switch (status) {
       case TileState.Normal:
         this.classVar = "enabled " + this.tileClass;
@@ -80,7 +81,7 @@ export class TileComponent implements OnInit {
 
 
   ngOnInit() {
-    this.currentState = this.data.state;
+    this.currentState = this.tileSpotModel.state;
   }
 
 }

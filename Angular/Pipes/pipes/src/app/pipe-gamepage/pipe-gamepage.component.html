@@ -6,7 +6,7 @@
       <tr>
       <td *ngFor="let tile of row" class="containingTD">
           <app-tile 
-            [data]=tile (click)="tileClick(tile)"></app-tile>
+            [tileSpotModel]=tile (click)="tileClick(tile)"></app-tile>
       </td>
     </tr>
   </ng-container>

@@ -43,7 +43,7 @@ export class TileSpot {
 
   public bubledClickEvent(): TileState {
     // console.log('tile data click bubbled up to tile: ' 
-    //   + this.id + 'starting state: ' + this.state);
+    //   + this.id + ' starting state: ' + this.state);
     switch (this.state) {
       case TileState.Normal:
         this.state = TileState.Selected;
@@ -56,8 +56,18 @@ export class TileSpot {
     }
 
     // console.log('post click on tile: ' 
-    //   + this.id + 'ending state: ' + this.state);
+    //   + this.id + ' ending state: ' + this.state);
     return this.state;
+  }
+
+  public IsLocked(): boolean {
+    // console.log("**checking tile state on tile " + this.id + ", current is: " + this.state)
+    if (this.state == TileState.Locked ||
+    this.state == TileState.Locking ) {
+      return true;
+    }
+
+    return false;
   }
 
 }

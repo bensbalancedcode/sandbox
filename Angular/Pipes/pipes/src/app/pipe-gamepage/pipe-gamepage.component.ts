@@ -54,7 +54,7 @@ export class PipeGamepageComponent implements OnInit {
         let type = this.pickTileType(h, i);
         let imageSource = this.getImageSourceString(type);
         var location = new TileLocation(h, i);
-        var tileData = new TileData(type, imageSource);
+        var tileData = new TileData(type, imageSource, counter);
         var tile = new TileSpot(counter, location, tileData, this.pipeservice, this.flowDirectionService);
         counter++;
         tRow[h] = tile;
@@ -79,7 +79,6 @@ export class PipeGamepageComponent implements OnInit {
     }
   }
 
-  // bug, deslect appears broken. might just be doubled click events
   tileClick(tile: TileSpot) {
     console.log("*** parent sees tile clicked on " + tile.id);
     if (this.selectedTile != undefined) {
@@ -105,11 +104,10 @@ export class PipeGamepageComponent implements OnInit {
     // console.log("");
   }
 
+  // bug seeing locking state when not locked
   SwapTiles(tileA: TileSpot, tileB: TileSpot) {
-    if (tileA.state == TileState.Locked ||
-      tileA.state == TileState.Locking ||
-      tileB.state == TileState.Locked ||
-      tileB.state == TileState.Locking) {
+    if (tileA.IsLocked() ||
+        tileB.IsLocked()) {
       console.log("tried to swap locked tiles.");
       return;
     }
